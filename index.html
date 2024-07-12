@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+<link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+<meta name="apple-mobile-web-app-title" content="CodePen">
+<link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+<link rel="mask-icon" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+
+<title>My Personal Portfolio - created by Karl White</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Libre+Franklin|Press+Start+2P');
+
+body {
+    color: #fff;
+    width: 100vw;
+    height: 100vh; /* Changed to 100vh to cover the full viewport height */
+    display: block;
+    background-color: #000000;
+    margin: 0; /* Removed default margin */
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+#particles-js {
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align content */
+    justify-content: center; /* Center align content */
+    height: 100%; /* Make container take full viewport height */
+}
+
+.row {
+    display: flex;
+    flex-direction: column; /* Adjusted to column for better alignment */
+    align-items: center; /* Center align content */
+    text-align: center; /* Center align text */
+    width: 100%;
+}
+
+.header {
+    justify-content: space-between;
+    width: 100%; /* Ensure header takes full width */
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    font-family: "Libre Franklin", sans-serif;
+    font-size: 1.25em;
+    text-align: center; /* Center align text */
+    margin-bottom: 20px; /* Added margin bottom for spacing */
+}
+
+.info h1 {
+    margin: 10px 0; /* Adjusted margin */
+    font-size: 35px;
+    font-family: "Libre Franklin", sans-serif;
+}
+
+.info h3, .info p {
+    margin: 0;
+    padding: 10px;
+    font-size: 25px;
+    font-family: "Libre Franklin", sans-serif;
+}
+
+.resume-block {
+    margin-top: 20px; /* Adjusted margin top */
+}
+
+.resume {
+    font-size: 30px;
+    font-family: calibri;
+    border: 5px solid white;
+    background-color: none;
+    padding: 10px;
+    border-radius: 25px;
+    transition: border-color 0.3s ease, color 0.3s ease; /* Added transition */
+}
+
+.resume:hover {
+    border-color: black;
+    color: black; /* Change text color on hover */
+}
+
+.resume a {
+    color: white;
+    text-decoration: none;
+}
+
+.message {
+    font-size: 25px;
+    font-family: calibri;
+    text-decoration: none;
+    margin: 20px 0; /* Adjusted margin */
+}
+
+.typewriter h1 {
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typewriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .15em; /* Adjust as needed */
+    animation:
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+
+.social {
+    display: flex;
+    justify-content: center; /* Center align content */
+    margin-top: 40px; /* Adjusted margin top */
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px; /* Adjusted margin */
+}
+
+.social-link {
+    display: flex;
+    justify-content: center; /* Center align content */
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    border-radius: 50%; /* Make round */
+    transition: background-color 0.3s ease; /* Added transition */
+}
+
+.social-link:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white on hover */
+}
+
+.social-type {
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Snow Effect */
+.snowfall {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/snow.png'); /* Added snow texture background */
+}
+
+.snowflake {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: snowfall linear infinite;
+    transform-origin: 0% 0%;
+}
+
+@keyframes snowfall {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+</style>
+
+<script>
+    window.console = window.console || function(t) {};
+</script>
+<script>
+    if (document.location.search.match(/type=embed/gi)) {
+        window.parent.postMessage("resize", "*");
+    }
+</script>
+</head>
+<body translate="no" id="particles-js">
+
+<!-- Snow Effect -->
+<div class="snowfall"></div>
+
+<div class="container">
+    <div class="row header">
+        <div class="info">
+            <h3>Hi there!</h3>
+            <h1>My name is Karl White</h1>
+            <p>I'm a versatile graphic designer and illustrator with a flair for creative writing</p>
+        </div>
+
+        <div class="resume-block">
+            <p class="resume"><a href="https://karlwhite247.github.io/" target="_blank">Resume</a></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2 class="message"><span>What value can I bring to your company? I have a real passion and talent for </span>
+            <a href="" class="typewrite" data-period="4000" data-type='[ "typography." , "logo design/branding." , "advertising." , "packaging design." , "visually communicating corporate identities." ]'>
+                <span class="wrap"></span>
+            </a>
+        </h2>
+    </div>
+
+    <div class="row social">
+        <div class="link"><a href="https://www.artstation.com/karlwhite247" target="_blank"><i class="social-link fab fa-artstation fa-2x"></i></a><span class="social-type">ArtStation</span></div>
+        <div class="link"><a href="https://www.behance.net/karlwhite247" target="_blank"><i class="social-link fab fa-behance fa-2x"></i></a><span class="social-type">Behance</span></div>
+        <div class="link"><a href="https://www.linkedin.com/in/karlwhite247" target="_blank"><i class="social-link fab fa-linkedin fa-2x"></i></a><span class="social-type">LinkedIn</span></div>
+        <div class="link"><a href="https://medium.com/@karlwhite247" target="_blank"><i class="social-link fab fa-medium fa-2x"></i></a><span class="social-type">Medium</span></div>
+        <div class="link"><a href="https://www.amazon.com/s?k=karlwhite247" target="_blank"><i class="social-link fab fa-amazon fa-2x"></i></a><span class="social-type">Amazon</span></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+var TxtType = function(el, toRotate, period) {
+    this.toRotate = toRotate;
+    this.el = el;
+    this.loopNum = 0;
+    this.period = parseInt(period, 10) || 2000;
+    this.txt = '';
+    this.tick();
+    this.isDeleting = false;
+};
+
+TxtType.prototype.tick = function() {
+    var i = this.loopNum % this.toRotate.length;
+    var fullTxt = this.toRotate[i];
+
+    if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+    } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+    }
+
+    this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+    var that = this;
+    var delta = 200 - Math.random() * 100;
+
+    if (this.isDeleting) { delta /= 2; }
+
+    if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+    } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+    }
+
+    setTimeout(function() {
+        that.tick();
+    }, delta);
+};
+
+window.onload = function() {
+    var elements = document.getElementsByClassName('typewrite');
+    for (var i = 0; i < elements.length; i++) {
+        var toRotate = elements[i].getAttribute('data-type');
+        var period = elements[i].getAttribute('data-period');
+        if (toRotate) {
+            new TxtType(elements[i], JSON.parse(toRotate), period);
+        }
+    }
+};
+</script>
+
+<script>
+// JavaScript for Snow Effect
+document.addEventListener('DOMContentLoaded', function() {
+    let snowflakes = document.createDocumentFragment();
+    for (let i = 0; i < 40; i++) {
+        let snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        snowflake.style.left = Math.random() * window.innerWidth + 'px';
+        snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        snowflake.style.animationDelay = -Math.random() * 10 + 's';
+        snowflakes.appendChild(snowflake);
+    }
+    document.querySelector('.snowfall').appendChild(snowflakes);
+});
+</script>
+
+</body>
+</html>
